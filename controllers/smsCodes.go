@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"github.com/klaus01/Go_LBSServer/models"
 	"github.com/klaus01/Go_LBSServer/utils"
 
 	"github.com/gin-gonic/gin"
@@ -30,5 +31,11 @@ func (x smsCodesController) post(c *gin.Context) {
 		return
 	}
 
-	utils.ResultSuccessData(c, body)
+	err := models.SendVerificationCode(body.PhoneNumber, "测试2")
+	if err != nil {
+		utils.ResultServerError(c, err.Error())
+		return
+	}
+
+	utils.ResultSuccessMsg(c, "获取验证码成功")
 }
