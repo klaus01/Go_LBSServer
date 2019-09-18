@@ -14,5 +14,7 @@ func Init(e *gin.Engine) {
 
 	orders := new(ordersController)
 	r = e.Group("/orders")
-	r.POST("/", orders.post)
+	r.GET("/", orders.getList)
+	r.POST("/", orders.createOrder)
+	r.POST("/deliveryInfo", orders.postDeliveryInfo)
 }

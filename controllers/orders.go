@@ -1,15 +1,20 @@
 package controllers
 
 import (
-	"net/http"
-
 	"github.com/gin-gonic/gin"
+	"github.com/klaus01/Go_LBSServer/utils"
 )
 
 type ordersController struct{}
 
-func (x ordersController) post(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"message": "朝秦暮楚",
-	})
+func (x ordersController) getList(c *gin.Context) {
+	utils.ResultSuccessData(c, nil)
+}
+
+func (x ordersController) createOrder(c *gin.Context) {
+	utils.ResultSuccessData(c, nil)
+}
+
+func (x ordersController) postDeliveryInfo(c *gin.Context) {
+	utils.ResultSuccessData(c, nil)
 }
