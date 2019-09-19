@@ -11,6 +11,7 @@ import (
 	"go.mongodb.org/mongo-driver/x/bsonx"
 
 	"github.com/klaus01/Go_LBSServer/config"
+	"github.com/klaus01/Go_LBSServer/models"
 )
 
 var db *mongo.Database
@@ -47,7 +48,7 @@ func GetDB() *mongo.Database {
 }
 
 func checkSmsCodes() {
-	collectionName := "smscodes"
+	collectionName := models.TableNameSmsCode
 	collection := db.Collection(collectionName)
 	indexes := collection.Indexes()
 	cur, err := indexes.List(Context())

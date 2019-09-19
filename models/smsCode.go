@@ -17,14 +17,14 @@ import (
 	"github.com/klaus01/Go_LBSServer/utils"
 )
 
+// TableNameSmsCode SmsCode 表名
+const TableNameSmsCode string = "smscodes"
+
+// SmsCode 短信模型
 type SmsCode struct {
-	PhoneNumber string
-	Code        string
-	CreateAt    *time.Time
-}
-
-func (s SmsCode) xxx() {
-
+	PhoneNumber string    `bson:"phoneNumber"`
+	Code        string    `bson:"code"`
+	CreateAt    time.Time `bson:"createAt"`
 }
 
 func postSendSMS(phoneNumber string, templateID string, parameters []string) error {
