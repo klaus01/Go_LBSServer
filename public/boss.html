@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8" />
+    <title>Boss</title>
+    <link
+      href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/moment.js/2.18.1/moment-with-locales.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/zh-cn.js"></script>
+    <script src="./javascripts/boss.js"></script>
+  </head>
+  <body>
+    <!-- 查询表单 -->
+    <form class="navbar-form navbar-left" role="search">
+      <div class="form-group" style="position:relative;">
+        <label for="beginDateTime">下单时间</label>
+        <input
+          type="text"
+          class="form-control"
+          id="beginDateTime"
+          style="width: 100px;"
+        />
+      </div>
+      <div class="form-group" style="position:relative;">
+        <label for="endDateTime">到</label>
+        <input
+          type="text"
+          class="form-control"
+          id="endDateTime"
+          style="width: 100px;"
+        />
+      </div>
+      <!-- </div> -->
+      <div class="btn-group">
+        <button
+          id="payStatusButton"
+          type="button"
+          class="btn btn-default dropdown-toggle"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          支付状态：所有 <span class="caret"></span>
+        </button>
+        <ul id="payStatusList" class="dropdown-menu">
+          <li><a href="#">所有</a></li>
+          <li data="0"><a href="#">待支付</a></li>
+          <li data="1"><a href="#">已支付</a></li>
+          <li data="2"><a href="#">支付异常</a></li>
+        </ul>
+      </div>
+      <div class="btn-group">
+        <button
+          id="deliveryStatusButton"
+          type="button"
+          class="btn btn-default dropdown-toggle"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          发货状态：所有 <span class="caret"></span>
+        </button>
+        <ul id="deliveryStatusList" class="dropdown-menu">
+          <li><a href="#">所有</a></li>
+          <li data="false"><a href="#">未发货</a></li>
+          <li data="true"><a href="#">已发货</a></li>
+        </ul>
+      </div>
+      <button
+        type="button"
+        class="btn btn-primary"
+        id="searchButton"
+        data-loading-text="查询中..."
+        autocomplete="off"
+      >
+        查询
+      </button>
+    </form>
+
+    <!-- 发货弹窗 -->
+    <div
+      class="modal fade bs-example-modal-sm"
+      id="shipDialog"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="mySmallModalLabel"
+    >
+      <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="mySmallModalLabel">订单发货</h4>
+          </div>
+          <div class="modal-body">
+            <p id="shipDialog-orderInfo"></p>
+            <dev>
+              <div class="form-group">
+                <label for="shipInputCourierCompany">快递公司</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="shipInputCourierCompany"
+                />
+              </div>
+              <div class="form-group">
+                <label for="shipInputWaybillNumber">运单号</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="shipInputWaybillNumber"
+                />
+              </div>
+            </dev>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+              取消
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              id="shipSubmit"
+              data-loading-text="提交中..."
+              autocomplete="off"
+            >
+              提交
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 数据表 -->
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th>订单号</th>
+          <th>下单时间</th>
+          <th>商品名称</th>
+          <th style="text-align:right">订单金额</th>
+          <th>收货人</th>
+          <th>手机号</th>
+          <th>地址</th>
+          <th>支付信息</th>
+          <th>发货信息</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- <tr>
+          <td>aaaaaaa</td>
+          <td>2019-05-05 11:11:22</td>
+          <td>商品什么</td>
+          <td>95.00</td>
+          <td>柯磊</td>
+          <td>18181994671</td>
+          <td>四川省 成都市 双流区 大件路文件段156号</td>
+          <td>待支付</td>
+          <td>未发货</td>
+        </tr> -->
+      </tbody>
+    </table>
+    <!-- 分页 -->
+    <nav aria-label="Page navigation">
+      <ul id="pageNavigation" class="pagination">
+        <!-- <li class="disabled">
+          <a href="#" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li class="active"><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li>
+          <a href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li> -->
+      </ul>
+    </nav>
+  </body>
+</html>

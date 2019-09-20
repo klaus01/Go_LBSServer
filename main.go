@@ -15,6 +15,8 @@ func main() {
 	database.Init()
 
 	r := gin.Default()
+	r.Static("/public", "./public")
+	r.StaticFile("/favicon.ico", "./public/favicon.ico")
 	controllers.Init(r)
 	r.Run()
 }
